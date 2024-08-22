@@ -26,6 +26,10 @@ public class UserService {
             throw new RuntimeException("Email already exists");
         }
 
+        if (user.getUserType() == null || (!user.getUserType().equals("user") && !user.getUserType().equals("chef"))) {
+            throw new RuntimeException("Invalid user type");
+        }
+
         // Hashirajte lozinku prije spremanja u bazu podataka
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
