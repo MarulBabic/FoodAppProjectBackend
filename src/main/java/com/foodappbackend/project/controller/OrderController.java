@@ -36,6 +36,12 @@ public class OrderController {
         return ResponseEntity.ok(orders);
     }
 
+    @GetMapping("/accepted")
+    public ResponseEntity<List<OrderRequest>> getAcceptedOrdersFromLast24Hours() {
+        List<OrderRequest> acceptedOrders = orderService.getAcceptedOrdersFromLast24Hours();
+        return ResponseEntity.ok(acceptedOrders);
+    }
+
     @PostMapping("/{id}")
     public ResponseEntity<Void> updateOrder(@PathVariable long id, @RequestBody OrderRequest orderRequest) {
         orderService.updateOrder(id, orderRequest);
@@ -49,6 +55,16 @@ public class OrderController {
             return ResponseEntity.ok().build(); // Vraća HTTP status 200 ako je uspješno
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build(); // Vraća HTTP status 404 ako narudžba nije pronađena
+        }
+    }
+
+    @PutMapping("/{orderId}/ontheway")
+    public ResponseEntity<Void> markOrderAsOnTheWay(@PathVariable("orderId") long orderId){
+        try{
+            orderService.markOrderAsOnTheWay(orderId);
+            return ResponseEntity.ok().build();
+        }catch (NoSuchElementException e){
+            return ResponseEntity.notFound().build();
         }
     }
 }

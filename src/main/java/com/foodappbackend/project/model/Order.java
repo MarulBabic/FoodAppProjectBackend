@@ -20,6 +20,7 @@ public class Order {
     private long userId;
     private double totalAmount;
     private String status;
+    private String address;
 
     private LocalDateTime createdAt;
 

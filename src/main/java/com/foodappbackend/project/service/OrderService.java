@@ -43,6 +43,23 @@ public class OrderService {
         return orders.stream().map(this::convertToOrderRequest).collect(Collectors.toList());
     }
 
+    public List<OrderRequest> getAcceptedOrders() {
+        List<Order> orders = orderRepository.findByStatus("Accepted");
+        return orders.stream().map(this::convertToOrderRequest).collect(Collectors.toList());
+    }
+
+    public List<OrderRequest> getAcceptedOrdersFromLast24Hours() {
+        // Prvo dobijamo trenutni datum i vreme, a zatim oduzimamo 24 sata
+        LocalDateTime last24Hours = LocalDateTime.now().minusHours(24);
+
+        List<Order> orders = orderRepository.findAcceptedOrdersFromLast24Hours(last24Hours, "Accepted");
+
+        return orders.stream()
+                .map(this::convertToOrderRequest)
+                .collect(Collectors.toList());
+    }
+
+
     public List<OrderRequest> getOrdersFromLast24Hours() {
         LocalDateTime last24Hours = LocalDateTime.now().minusHours(24);
         List<Order> orders = orderRepository.findOrdersFromLast24Hours(last24Hours);
@@ -92,12 +109,26 @@ public class OrderService {
         }
     }
 
+    public void markOrderAsOnTheWay(long orderId){
+        Optional<Order> existingOrderOpt = orderRepository.findById(orderId);
+        if (existingOrderOpt.isPresent()) {
+            Order order = existingOrderOpt.get();
+            order.setStatus("On the way");
+
+            orderRepository.save(order);
+        } else {
+            throw new NoSuchElementException("Order with ID " + orderId + " not found.");
+        }
+    }
+
     private OrderRequest convertToOrderRequest(Order order) {
         OrderRequest request = new OrderRequest();
         request.setOrderId(order.getId());
         request.setUserId(order.getUserId());
         request.setTotalAmount(order.getTotalAmount());
         request.setStatus(order.getStatus());
+        request.setAddress(order.getAddress());
+
         request.setItems(order.getItems().stream().map(item -> {
             OrderItemRequest itemRequest = new OrderItemRequest();
             itemRequest.setProductId(item.getProductId());

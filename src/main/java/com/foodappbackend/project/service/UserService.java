@@ -26,7 +26,7 @@ public class UserService {
             throw new RuntimeException("Email already exists");
         }
 
-        if (user.getUserType() == null || (!user.getUserType().equals("user") && !user.getUserType().equals("chef"))) {
+        if (user.getUserType() == null || (!user.getUserType().equals("user") && !user.getUserType().equals("chef") && !user.getUserType().equals("delivery") )) {
             throw new RuntimeException("Invalid user type");
         }
 
