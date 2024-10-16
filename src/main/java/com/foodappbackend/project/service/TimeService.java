@@ -14,7 +14,7 @@ public class TimeService {
 
     private final TimeRepository timeRepository;
 
-    @Autowired
+  //  @Autowired
     public TimeService(TimeRepository timeRepository) {
         this.timeRepository = timeRepository;
     }

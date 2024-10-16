@@ -14,7 +14,7 @@ public class FoodsService {
 
     private final FoodsRepository foodsRepository;
 
-    @Autowired
+    //@Autowired
     public FoodsService(FoodsRepository foodsRepository) {
         this.foodsRepository = foodsRepository;
     }

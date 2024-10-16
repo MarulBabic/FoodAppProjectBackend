@@ -14,7 +14,7 @@ public class PriceService {
 
     private final PriceRepository priceRepository;
 
-    @Autowired
+   // @Autowired
     public PriceService(PriceRepository priceRepository) {
         this.priceRepository = priceRepository;
     }

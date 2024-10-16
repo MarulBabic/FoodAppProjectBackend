@@ -55,16 +55,7 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email and password are required");
             }
 
-            // Pronađi korisnika po e-mail adresi
-            Users user = userService.getUserByEmail(email);
-            if (user == null) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
-            }
-
-            // Provjeri je li unesena lozinka ispravna
-            if (!passwordEncoder.matches(password, user.getPassword())) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
-            }
+            Users user = userService.loginUser(email,password);
 
             Map<String, Object> response = new HashMap<>();
             response.put("id", user.getId());

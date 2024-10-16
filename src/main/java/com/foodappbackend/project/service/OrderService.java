@@ -22,7 +22,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final FoodsRepository foodsRepository;
 
-    @Autowired
+   // @Autowired
     public OrderService(OrderRepository orderRepository,FoodsRepository foodsRepository){
         this.orderRepository=orderRepository;
         this.foodsRepository=foodsRepository;

@@ -13,7 +13,7 @@ public class LocationService {
 
     private final LocationRepository locationRepository;
 
-    @Autowired
+   // @Autowired
     public LocationService(LocationRepository locationRepository) {
         this.locationRepository = locationRepository;
     }
